@@ -1,15 +1,30 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-function FeaturedTiles({ tiles }) {
-  const topTiles = tiles?.slice(0, 4);
+function FeaturedTiles() {
+  const [tiles, setTiles] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  if (!topTiles || topTiles.length === 0) {
+  useEffect(() => {
+    fetch("/data.json")   // 👈 public folder direct access
+      .then((res) => res.json())
+      .then((data) => {
+        setTiles(data.slice(0, 4));
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
     return (
       <div className="text-center py-10 text-xl font-semibold">
-        No Tiles Found
+        Loading Featured Tiles...
       </div>
     );
   }
@@ -22,12 +37,11 @@ function FeaturedTiles({ tiles }) {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {topTiles.map((tile) => (
+          {tiles.map((tile) => (
             <div
               key={tile.id}
               className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300"
             >
-              {/* Image */}
               <div className="relative w-full h-56">
                 <Image
                   src={tile.image}
@@ -37,11 +51,8 @@ function FeaturedTiles({ tiles }) {
                 />
               </div>
 
-              {/* Content */}
               <div className="p-5">
-                <h3 className="text-xl font-bold mb-2">
-                  {tile.title}
-                </h3>
+                <h3 className="text-xl font-bold mb-2">{tile.title}</h3>
 
                 <p className="text-gray-600 text-sm mb-3">
                   {tile.description}
