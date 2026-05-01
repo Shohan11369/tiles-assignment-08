@@ -46,5 +46,54 @@
     "dimensions": "30x30 cm",
     "material": "Ceramic",
     "inStock": true
+  },
+
+  {
+    "id": "tile_005",
+    "title": "Luxury Black Stone Tile",
+    "description": "Premium black stone tile for luxury modern interiors",
+    "image": "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace",
+    "category": "stone",
+    "price": 89.99,
+    "currency": "USD",
+    "dimensions": "60x60 cm",
+    "material": "Stone",
+    "inStock": true
+  },
+  {
+    "id": "tile_006",
+    "title": "Glossy Grey Floor Tile",
+    "description": "Smooth glossy grey tile perfect for floors",
+    "image": "https://images.unsplash.com/photo-1615873968403-89e068629265",
+    "category": "ceramic",
+    "price": 55.25,
+    "currency": "USD",
+    "dimensions": "60x60 cm",
+    "material": "Ceramic",
+    "inStock": true
+  },
+  {
+    "id": "tile_007",
+    "title": "Golden Luxury Pattern Tile",
+    "description": "Elegant golden design tile for premium interiors",
+    "image": "https://images.unsplash.com/photo-1600566752229-250ed79470f5",
+    "category": "decorative",
+    "price": 99.99,
+    "currency": "USD",
+    "dimensions": "40x40 cm",
+    "material": "Ceramic",
+    "inStock": false
+  },
+  {
+    "id": "tile_008",
+    "title": "Minimal White Matte Tile",
+    "description": "Clean modern matte white tile for minimalist design",
+    "image": "https://images.unsplash.com/photo-1600210491892-03d54c0aaf87",
+    "category": "minimal",
+    "price": 40.00,
+    "currency": "USD",
+    "dimensions": "50x50 cm",
+    "material": "Porcelain",
+    "inStock": true
   }
 ]
