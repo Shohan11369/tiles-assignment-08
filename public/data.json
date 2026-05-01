@@ -1,0 +1,50 @@
+[
+  {
+    "id": "tile_001",
+    "title": "Ceramic Blue Tile",
+    "description": "Premium ceramic tile with blue glaze finish",
+    "image": "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6",
+    "category": "ceramic",
+    "price": 45.99,
+    "currency": "USD",
+    "dimensions": "60x60 cm",
+    "material": "Ceramic",
+    "inStock": true
+  },
+  {
+    "id": "tile_002",
+    "title": "Modern Marble White Tile",
+    "description": "Elegant white marble tile for luxury interiors",
+    "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+    "category": "marble",
+    "price": 78.50,
+    "currency": "USD",
+    "dimensions": "80x80 cm",
+    "material": "Marble",
+    "inStock": true
+  },
+  {
+    "id": "tile_003",
+    "title": "Rustic Wooden Texture Tile",
+    "description": "Wood-look porcelain tile with natural texture",
+    "image": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c",
+    "category": "porcelain",
+    "price": 52.75,
+    "currency": "USD",
+    "dimensions": "20x120 cm",
+    "material": "Porcelain",
+    "inStock": false
+  },
+  {
+    "id": "tile_004",
+    "title": "Geometric Pattern Tile",
+    "description": "Stylish geometric design tile for modern spaces",
+    "image": "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3",
+    "category": "decorative",
+    "price": 64.99,
+    "currency": "USD",
+    "dimensions": "30x30 cm",
+    "material": "Ceramic",
+    "inStock": true
+  }
+]

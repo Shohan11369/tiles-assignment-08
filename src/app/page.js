@@ -6,7 +6,9 @@ export default async function Home() {
   //(JSON Server port 5000)
   let tiles = [];
   try {
-    const res = await fetch("http://localhost:5000/tiles", { cache: "no-store" });
+    const res = await fetch("http://localhost:3000/tiles", {
+      cache: "no-store",
+    });
     if (res.ok) {
       tiles = await res.json();
     }
@@ -16,13 +18,10 @@ export default async function Home() {
 
   return (
     <div>
-      
-      <Banner />
-
-      
       <MarqueeSection tiles={tiles} />
 
-      
+      <Banner />
+
       <FeaturedTiles tiles={tiles} />
     </div>
   );

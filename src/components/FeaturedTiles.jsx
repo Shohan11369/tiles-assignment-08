@@ -1,42 +1,68 @@
-import Link from "next/link";
+"use client";
 
-const FeaturedTiles = ({ tiles }) => {
-  
-  const featured = tiles.slice(0, 4);
+import Link from "next/link";
+import Image from "next/image";
+
+function FeaturedTiles({ tiles }) {
+  const topTiles = tiles?.slice(0, 4);
+
+  if (!topTiles || topTiles.length === 0) {
+    return (
+      <div className="text-center py-10 text-xl font-semibold">
+        No Tiles Found
+      </div>
+    );
+  }
 
   return (
-    <section className="container mx-auto py-20 px-4 md:px-16">
-      <div className="flex flex-col items-center mb-12 text-center">
-        <h2 className="text-4xl font-bold text-black mb-2">Featured Collections</h2>
-        <p className="text-gray-500 mb-4">Handpicked premium designs for your space</p>
-        <div className="w-24 h-1 bg-primary rounded-full"></div>
-      </div>
+    <section className="py-16 px-6 bg-gray-50">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-4xl font-bold text-center mb-12">
+          Featured Tiles
+        </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        {featured.map((tile) => (
-          <div key={tile.id} className="card bg-white shadow-xl hover:shadow-2xl transition-all border border-gray-100 group">
-            <figure className="h-56 relative overflow-hidden">
-              {/* <img 
-                src={tile.image} 
-                alt={tile.title} 
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
-              /> */}
-            </figure>
-            <div className="card-body p-6">
-              <h3 className="card-title text-black text-lg">{tile.title}</h3>
-              <p className="text-gray-500 text-sm line-clamp-1">{tile.description}</p>
-              <div className="card-actions justify-between items-center mt-4">
-                <span className="text-xl font-bold text-primary">${tile.price}</span>
-                <Link href={`/tile/${tile.id}`} className="btn btn-primary btn-sm normal-case">
-                  View Details
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {topTiles.map((tile) => (
+            <div
+              key={tile.id}
+              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300"
+            >
+              {/* Image */}
+              <div className="relative w-full h-56">
+                <Image
+                  src={tile.image}
+                  alt={tile.title}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+
+              {/* Content */}
+              <div className="p-5">
+                <h3 className="text-xl font-bold mb-2">
+                  {tile.title}
+                </h3>
+
+                <p className="text-gray-600 text-sm mb-3">
+                  {tile.description}
+                </p>
+
+                <p className="text-lg font-semibold text-blue-600 mb-4">
+                  ${tile.price}
+                </p>
+
+                <Link href={`/tile/${tile.id}`}>
+                  <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+                    View Details
+                  </button>
                 </Link>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
-};
+}
 
 export default FeaturedTiles;
