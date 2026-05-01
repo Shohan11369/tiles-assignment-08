@@ -49,7 +49,7 @@ const TileDetailPage = async ({ params }) => {
        
       </div>
 
-       {/* ✅ BACK HOME BUTTON */}
+       {/*BACK HOME BUTTON */}
       <div className="pt-6">
         <Link href="/">
           <Button color="primary">

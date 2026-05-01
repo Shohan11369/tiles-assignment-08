@@ -1,47 +1,72 @@
 "use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 const Navbar = () => {
+  // demo state (later auth লাগবে)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
     <div className="border-b px-2">
-      <nav className=" flex justify-between items-center  py-3 max-w-7xl mx-auto w-full">
+      <nav className="flex justify-between items-center py-3 max-w-7xl mx-auto w-full">
+
+        {/* LEFT - LOGO */}
         <div className="flex gap-2 items-center">
-          <Image
-            src={"/logo.jpg"}
-            alt="logo"
-            loading="eager"
-            width={30}
-            height={30}
-            className="object-cover h-auto w-auto"
-          />
+          <Link href="/">
+            <Image
+              src={"/logo.jpg"}
+              alt="logo"
+              loading="eager"
+              width={30}
+              height={30}
+              className="object-cover h-auto w-auto cursor-pointer"
+            />
+          </Link>
+
           <h3 className="font-black text-lg">pixgen.</h3>
         </div>
 
-        <ul className="flex items-center gap-5 text-sm">
+        {/* CENTER - NAV LINKS */}
+        <ul className="hidden md:flex items-center gap-6 text-sm font-medium">
           <li>
-            <Link href={"/"}>Home</Link>
+            <Link href="/">Home</Link>
           </li>
           <li>
-            <Link href={"/all-photos"}>All Photos</Link>
+            <Link href="/all-tiles">All Tiles</Link>
           </li>
           <li>
-            <Link href={"/pricing"}>Pricing</Link>
-          </li>
-          <li>
-            <Link href={"/profile"}>Profile</Link>
+            <Link href="/profile">My Profile</Link>
           </li>
         </ul>
 
-        <div className="flex gap-4">
-          <ul className="flex items-center  text-sm">
-            <li>
-              <Link href={"/signup"}>SignUp</Link>
-            </li>
-            <li>
-              <Link href={"/signin"}>SignIn</Link>
-            </li>
-          </ul>
+        {/* RIGHT - AUTH */}
+        <div className="flex items-center gap-3 text-sm">
+
+          {!isLoggedIn ? (
+            <Link href="/signin">
+              <button className="px-4 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                Login
+              </button>
+            </Link>
+          ) : (
+            <>
+              <Link href="/profile">
+                <button className="px-3 py-1 border rounded-md">
+                  Profile
+                </button>
+              </Link>
+
+              <button
+                onClick={() => setIsLoggedIn(false)}
+                className="px-3 py-1 bg-red-500 text-white rounded-md"
+              >
+                Logout
+              </button>
+            </>
+          )}
+
         </div>
       </nav>
     </div>

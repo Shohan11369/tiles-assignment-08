@@ -9,7 +9,7 @@ function FeaturedTiles() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/data.json")   // 👈 public folder direct access
+    fetch("/data.json")   
       .then((res) => res.json())
       .then((data) => {
         setTiles(data.slice(0, 4));
