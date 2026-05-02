@@ -67,11 +67,11 @@ const Navbar = () => {
           {!user ? (
             <div className="flex gap-3">
               <Link href="/signup" className={linkClass("/signup")}>
-                SignUp
+                Register
               </Link>
 
               <Link href="/signin" className={linkClass("/signin")}>
-                SignIn
+                Login
               </Link>
             </div>
           ) : (
@@ -87,7 +87,7 @@ const Navbar = () => {
               </Avatar>
 
               <Button onClick={handleSignOut} size="sm" variant="danger">
-                SignOut
+                LogOut
               </Button>
             </>
           )}

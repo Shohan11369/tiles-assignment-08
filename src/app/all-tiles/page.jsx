@@ -3,19 +3,27 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Input, Button } from "@heroui/react";
+import { Input, Button, Spinner } from "@heroui/react";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 const AllTilesPage = () => {
   const [tiles, setTiles] = useState([]);
-  const [search, setSearch] = useState(""); 
+  const [search, setSearch] = useState("");
   const [favorites, setFavorites] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // LOAD DATA
   useEffect(() => {
     fetch("/data.json")
       .then((res) => res.json())
-      .then((data) => setTiles(Array.isArray(data) ? data : []))
-      .catch(() => setTiles([]));
+      .then((data) => {
+        setTiles(Array.isArray(data) ? data : []);
+        setLoading(false);
+      })
+      .catch(() => {
+        setTiles([]);
+        setLoading(false);
+      });
   }, []);
 
   // LOAD FAVORITES
@@ -33,19 +41,16 @@ const AllTilesPage = () => {
     }
   }, []);
 
-  
   useEffect(() => {
     localStorage.setItem("favorites", JSON.stringify(favorites));
   }, [favorites]);
 
-  
   const filteredTiles = Array.isArray(tiles)
     ? tiles.filter((tile) =>
-        (tile?.title || "").toLowerCase().includes(search.toLowerCase())
+        (tile?.title || "").toLowerCase().includes(search.toLowerCase()),
       )
     : [];
 
-  
   const handleFavorite = (tile) => {
     setFavorites((prev) => {
       const exists = prev.find((t) => t.id === tile.id);
@@ -58,9 +63,16 @@ const AllTilesPage = () => {
     });
   };
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <Spinner size="lg" />
+      </div>
+    );
+  }
+
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-6">
-
       {/* SEARCH BAR */}
       <Input
         placeholder="Search tiles by title..."
@@ -71,7 +83,6 @@ const AllTilesPage = () => {
 
       {/* GRID */}
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-
         {filteredTiles.map((tile) => {
           const isFav = favorites.some((t) => t.id === tile.id);
 
@@ -80,7 +91,6 @@ const AllTilesPage = () => {
               key={tile.id}
               className="border rounded-lg overflow-hidden shadow hover:shadow-lg transition"
             >
-
               {/* IMAGE */}
               <div className="relative w-full h-48">
                 <Image
@@ -103,21 +113,23 @@ const AllTilesPage = () => {
                 </Link>
 
                 {/* FAVORITE */}
-                <Button
-                  onClick={() => handleFavorite(tile)}
-                  className="w-full mt-2"
-                  variant="bordered"
-                >
-                  {isFav
-                    ? "Remove Favorite ❤️"
-                    : "Add to Favorite 🤍"}
+                <Button className="w-full" onClick={() => handleFavorite(tile)}>
+                  {isFav ? (
+                    <>
+                      Remove Favorite
+                      <FaHeart className="ml-2" />
+                    </>
+                  ) : (
+                    <>
+                      Add to Favorite
+                      <FaRegHeart className="ml-2" />
+                    </>
+                  )}
                 </Button>
-
               </div>
             </div>
           );
         })}
-
       </div>
     </div>
   );
