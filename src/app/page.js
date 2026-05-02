@@ -6,7 +6,7 @@ export default async function Home() {
   //(JSON Server port 5000)
   let tiles = [];
   try {
-    const res = await fetch("http://localhost:3000/tiles", {
+    const res = await fetch("https://tiles-assignment-08.vercel.app/tiles", {
       cache: "no-store",
     });
     if (res.ok) {
