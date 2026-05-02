@@ -13,8 +13,12 @@ import {
   TextField,
 } from "@heroui/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { GrGoogle } from "react-icons/gr";
 
 export default function SignUpPage() {
+  const router = useRouter();
+
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -32,19 +36,22 @@ export default function SignUpPage() {
 
     console.log({ data, error });
 
-    
+    if (!error) {
+      router.push("/");
+    }
   };
+
+   const handlGoogleSignUp = async () => {
+      await authClient.signIn.social({
+          provider: 'google'
+      })
+    }
 
   return (
     <Card className="border mx-auto w-[500px] py-10 mt-5">
-      <h1 className="text-center text-2xl font-bold">
-        User Registration
-      </h1>
+      <h1 className="text-center text-2xl font-bold">User Registration</h1>
 
-      <Form
-        className="flex w-96 mx-auto flex-col gap-4"
-        onSubmit={onSubmit}
-      >
+      <Form className="flex w-96 mx-auto flex-col gap-4" onSubmit={onSubmit}>
         {/* Name */}
         <TextField isRequired name="name" type="text">
           <Label>Name</Label>
@@ -58,9 +65,7 @@ export default function SignUpPage() {
           name="email"
           type="email"
           validate={(value) => {
-            if (
-              !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)
-            ) {
+            if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
               return "Please enter a valid email address";
             }
 
@@ -117,21 +122,14 @@ export default function SignUpPage() {
         {/* Login Link */}
         <p className="text-sm text-center mt-2">
           Already have an account?{" "}
-          <Link
-            href="/login"
-            className="text-blue-600 font-semibold"
-          >
+          <Link href="/login" className="text-blue-600 font-semibold">
             Login
           </Link>
         </p>
 
         {/* Google Login */}
-        <Button
-          type="button"
-          variant="bordered"
-          className="w-full"
-        >
-          Continue with Google
+        <Button onClick={handlGoogleSignUp} type="button" variant="bordered" className="w-full">
+          <GrGoogle/> Continue with Google
         </Button>
       </Form>
     </Card>
