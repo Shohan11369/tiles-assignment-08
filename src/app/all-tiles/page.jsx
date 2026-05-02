@@ -18,7 +18,7 @@ const AllTilesPage = () => {
       .catch(() => setTiles([]));
   }, []);
 
-  // LOAD FAVORITES (SAFE + ONLY ONCE)
+  // LOAD FAVORITES
   useEffect(() => {
     if (typeof window !== "undefined") {
       const fav = localStorage.getItem("favorites");
@@ -33,19 +33,19 @@ const AllTilesPage = () => {
     }
   }, []);
 
-  // AUTO SYNC TO LOCALSTORAGE
+  
   useEffect(() => {
     localStorage.setItem("favorites", JSON.stringify(favorites));
   }, [favorites]);
 
-  // SAFE FILTER
+  
   const filteredTiles = Array.isArray(tiles)
     ? tiles.filter((tile) =>
         (tile?.title || "").toLowerCase().includes(search.toLowerCase())
       )
     : [];
 
-  // FAVORITE HANDLER (SAFE UPDATE)
+  
   const handleFavorite = (tile) => {
     setFavorites((prev) => {
       const exists = prev.find((t) => t.id === tile.id);

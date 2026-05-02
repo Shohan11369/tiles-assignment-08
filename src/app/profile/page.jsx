@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import { Avatar, Button, Card } from "@heroui/react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -59,15 +60,7 @@ export default function ProfilePage() {
           <p className="text-gray-500">Favorites</p>
         </div>
 
-        <div className="border p-6 rounded-lg text-center">
-          <h3 className="text-2xl font-bold">12</h3>
-          <p className="text-gray-500">Viewed Tiles</p>
-        </div>
-
-        <div className="border p-6 rounded-lg text-center">
-          <h3 className="text-2xl font-bold">8</h3>
-          <p className="text-gray-500">Saved Tiles</p>
-        </div>
+        
       </div>
 
       {/* FAVORITE TILES SECTION */}
@@ -83,7 +76,7 @@ export default function ProfilePage() {
                 key={tile.id}
                 className="border p-4 rounded-lg flex items-center gap-4"
               >
-                <img
+                <Image
                   src={tile.image}
                   alt={tile.title}
                   className="w-16 h-16 rounded object-cover"
@@ -112,9 +105,7 @@ export default function ProfilePage() {
 
       {/* ACTION BUTTONS */}
       <div className="mt-10 flex flex-wrap gap-4">
-        <Button onClick={handleUpdate} className="bg-blue-500 text-white">
-          Update Profile
-        </Button>
+
 
         <Button onClick={handleLogout} variant="danger">
           Logout
