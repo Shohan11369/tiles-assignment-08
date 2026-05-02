@@ -113,16 +113,19 @@ const AllTilesPage = () => {
                 </Link>
 
                 {/* FAVORITE */}
-                <Button className="w-full" onClick={() => handleFavorite(tile)}>
+                <Button
+                  className="w-full mt-2 bg-white border"
+                  onClick={() => handleFavorite(tile)}
+                >
                   {isFav ? (
                     <>
                       Remove Favorite
-                      <FaHeart className="ml-2" />
+                      <FaHeart className="ml-2 text-gray-400" />
                     </>
                   ) : (
                     <>
                       Add to Favorite
-                      <FaRegHeart className="ml-2" />
+                      <FaRegHeart className="ml-2 text-red-500" />
                     </>
                   )}
                 </Button>
