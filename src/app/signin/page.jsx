@@ -13,8 +13,12 @@ import {
 } from "@heroui/react";
 import { GrGoogle } from "react-icons/gr";
 import toast, { Toaster } from "react-hot-toast";
+import { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function SignInPage() {
+  const [showPassword, setShowPassword] = useState(false);
+
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -34,7 +38,7 @@ export default function SignInPage() {
 
       console.log({ data, error });
 
-      // ❌ ERROR HANDLING
+      //  ERROR HANDLING
       if (error) {
         if (error.code === "INVALID_EMAIL_OR_PASSWORD") {
           toast.error("Invalid email or password!");
@@ -44,7 +48,7 @@ export default function SignInPage() {
         return;
       }
 
-      // ✅ SUCCESS
+      //  SUCCESS
       toast.success("Signed in successfully!");
 
       if (data) {
@@ -56,7 +60,7 @@ export default function SignInPage() {
     }
   };
 
-  // 🔥 GOOGLE LOGIN (IMPROVED)
+  //  GOOGLE LOGIN (IMPROVED)
   const handlGoogleSignIn = async () => {
     const loading = toast.loading("Redirecting to Google...");
 
@@ -84,13 +88,9 @@ export default function SignInPage() {
       <Toaster position="top-center" />
 
       <Card className="border mx-auto w-[500px] py-10 mt-5">
-
-        <h1 className="text-center text-2xl font-bold">
-          Sign In
-        </h1>
+        <h1 className="text-center text-2xl font-bold">Sign In</h1>
 
         <Form className="flex w-96 mx-auto flex-col gap-4" onSubmit={onSubmit}>
-
           {/* EMAIL */}
           <TextField isRequired name="email" type="email">
             <Label>Email</Label>
@@ -99,9 +99,23 @@ export default function SignInPage() {
           </TextField>
 
           {/* PASSWORD */}
-          <TextField isRequired name="password" type="password">
+          <TextField
+            isRequired
+            name="password"
+            type={showPassword ? "text" : "password"}
+          >
             <Label>Password</Label>
+
             <Input placeholder="Enter password" />
+
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-20 bottom-42"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+
             <FieldError />
           </TextField>
 
@@ -110,7 +124,6 @@ export default function SignInPage() {
             <Check />
             Sign in
           </Button>
-
         </Form>
 
         {/* GOOGLE LOGIN */}
@@ -123,7 +136,6 @@ export default function SignInPage() {
           <GrGoogle />
           Continue with Google
         </Button>
-
       </Card>
     </>
   );

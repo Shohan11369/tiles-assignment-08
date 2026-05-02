@@ -119,13 +119,13 @@ const AllTilesPage = () => {
                 >
                   {isFav ? (
                     <>
-                      Remove Favorite
-                      <FaHeart className="ml-2 text-gray-400" />
+                      <span className="text-black">Remove Favorite</span>
+                      <FaHeart className="ml-2  text-red-500" />
                     </>
                   ) : (
                     <>
-                      Add to Favorite
-                      <FaRegHeart className="ml-2 text-red-500" />
+                      <span className="text-black">Add to Favorite</span>
+                      <FaRegHeart className="ml-2 text-gray-400" />
                     </>
                   )}
                 </Button>

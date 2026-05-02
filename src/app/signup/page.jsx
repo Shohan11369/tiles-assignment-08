@@ -1,6 +1,7 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
+import { useState } from "react";
 import { Check } from "@gravity-ui/icons";
 import {
   Button,
@@ -16,9 +17,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { GrGoogle } from "react-icons/gr";
 import toast, { Toaster } from "react-hot-toast";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function SignUpPage() {
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -74,9 +77,7 @@ export default function SignUpPage() {
       <Toaster position="top-center" />
 
       <Card className="border mx-auto w-[500px] py-10 mt-5">
-        <h1 className="text-center text-2xl font-bold">
-          User Registration
-        </h1>
+        <h1 className="text-center text-2xl font-bold">User Registration</h1>
 
         <Form className="flex w-96 mx-auto flex-col gap-4" onSubmit={onSubmit}>
           {/* Name */}
@@ -92,9 +93,7 @@ export default function SignUpPage() {
             name="email"
             type="email"
             validate={(value) => {
-              if (
-                !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)
-              ) {
+              if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
                 return "Please enter a valid email address";
               }
               return null;
@@ -110,7 +109,7 @@ export default function SignUpPage() {
             isRequired
             minLength={8}
             name="password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             validate={(value) => {
               if (value.length < 8) {
                 return "Password must be at least 8 characters";
@@ -123,12 +122,25 @@ export default function SignUpPage() {
               }
               return null;
             }}
+            className="relative"
           >
             <Label>Password</Label>
+
             <Input placeholder="Enter your password" />
+
+            {/* EYE ICON */}
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-9"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+
             <Description>
               Must be at least 8 characters with 1 uppercase and 1 number
             </Description>
+
             <FieldError />
           </TextField>
 

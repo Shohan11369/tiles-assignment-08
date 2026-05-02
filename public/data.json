@@ -17,7 +17,7 @@
     "description": "Elegant white marble tile for luxury interiors",
     "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
     "category": "marble",
-    "price": 78.50,
+    "price": 78.5,
     "currency": "USD",
     "dimensions": "80x80 cm",
     "material": "Marble",
@@ -76,7 +76,7 @@
     "id": "tile_007",
     "title": "Golden Luxury Pattern Tile",
     "description": "Elegant golden design tile for premium interiors",
-    "image": "https://images.unsplash.com/photo-1600566752229-250ed79470f5",
+    "image": "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80",
     "category": "decorative",
     "price": 99.99,
     "currency": "USD",
@@ -84,13 +84,14 @@
     "material": "Ceramic",
     "inStock": false
   },
+
   {
     "id": "tile_008",
     "title": "Minimal White Matte Tile",
     "description": "Clean modern matte white tile for minimalist design",
     "image": "https://images.unsplash.com/photo-1600210491892-03d54c0aaf87",
     "category": "minimal",
-    "price": 40.00,
+    "price": 40.0,
     "currency": "USD",
     "dimensions": "50x50 cm",
     "material": "Porcelain",
