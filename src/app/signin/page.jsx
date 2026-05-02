@@ -33,7 +33,7 @@ export default function SignInPage() {
 
     console.log({ data, error });
 
-    // ❌ ERROR HANDLING
+    //  ERROR HANDLING
     if (error) {
       if (error.code === "INVALID_EMAIL_OR_PASSWORD") {
         toast.error("Invalid email or password!");
@@ -43,10 +43,9 @@ export default function SignInPage() {
       return;
     }
 
-    // ✅ SUCCESS
+    // SUCCESS
     toast.success("Signed in successfully!");
 
-    // optional redirect safety (if needed)
     if (data) {
       window.location.href = "/";
     }
