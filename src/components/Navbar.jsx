@@ -24,7 +24,7 @@ const Navbar = () => {
             height={30}
             className="object-cover h-auto w-auto"
           />
-          <h3 className="font-black text-lg">pixgen.</h3>
+          <h3 className="font-black text-lg">Tiles</h3>
         </div>
 
         <ul className="flex items-center gap-5 text-sm">
