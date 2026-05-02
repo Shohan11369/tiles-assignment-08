@@ -19,10 +19,10 @@ const Footer = () => {
       {/* Content */}
       <div className="max-w-7xl mx-auto px-6 py-16">
         {/* Top Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left">
           {/* Brand */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
+          <div className="space-y-4 flex flex-col items-center md:items-start">
+            <div className="flex items-center gap-2 justify-center md:justify-start">
               <Image
                 src="/logo.jpg"
                 alt="tiles logo"
@@ -108,7 +108,7 @@ const Footer = () => {
           </div>
 
           {/* CTA Block */}
-          <div className="space-y-4">
+          <div className="space-y-4 flex flex-col items-center md:items-start">
             <h3 className="text-sm font-semibold text-black dark:text-white">
               Start exploring
             </h3>
@@ -133,10 +133,10 @@ const Footer = () => {
         <div className="mt-12 h-px w-full bg-linear-to-r from-transparent via-gray-300 to-transparent dark:via-white/10" />
 
         {/* Bottom */}
-        <div className="mt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+        <div className="mt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500 dark:text-gray-400 text-center md:text-left">
           <p>© {new Date().getFullYear()} Tiles. All rights reserved.</p>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-6 justify-center">
             <Link
               href="/privacy"
               className="hover:text-black dark:hover:text-white transition"
