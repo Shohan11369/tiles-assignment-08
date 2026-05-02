@@ -12,7 +12,6 @@ import {
   TextField,
 } from "@heroui/react";
 import { GrGoogle } from "react-icons/gr";
-import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function SignInPage() {
@@ -34,12 +33,23 @@ export default function SignInPage() {
 
     console.log({ data, error });
 
+    // ❌ ERROR HANDLING
     if (error) {
-      toast.error(error.message || "Invalid email or password!");
+      if (error.code === "INVALID_EMAIL_OR_PASSWORD") {
+        toast.error("Invalid email or password!");
+      } else {
+        toast.error(error.message || "Login failed!");
+      }
       return;
     }
 
+    // ✅ SUCCESS
     toast.success("Signed in successfully!");
+
+    // optional redirect safety (if needed)
+    if (data) {
+      window.location.href = "/";
+    }
   };
 
   const handlGoogleSignIn = async () => {
@@ -58,7 +68,6 @@ export default function SignInPage() {
 
   return (
     <>
-      {/* Toast container */}
       <Toaster position="top-center" />
 
       <Card className="border mx-auto w-[500px] py-10 mt-5">
