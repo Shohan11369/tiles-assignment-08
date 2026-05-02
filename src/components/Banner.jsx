@@ -16,7 +16,7 @@ const Banner = () => {
             styles that perfectly match your interior and architectural ideas.
           </p>
 
-          <div className="flex text-center gap-4">
+          <div className="flex text-center justify-center items-center gap-4">
             <Link href="#">
               <Button className="bg-linear-to-r from-pink-500 via-purple-500 bg-red-500">
                 Browser Now
