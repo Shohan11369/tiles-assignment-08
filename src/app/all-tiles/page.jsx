@@ -7,7 +7,7 @@ import { Input, Button } from "@heroui/react";
 
 const AllTilesPage = () => {
   const [tiles, setTiles] = useState([]);
-  const [search, setSearch] = useState(""); // ✅ FIXED (was array)
+  const [search, setSearch] = useState(""); 
   const [favorites, setFavorites] = useState([]);
 
   // LOAD DATA
@@ -18,31 +18,44 @@ const AllTilesPage = () => {
       .catch(() => setTiles([]));
   }, []);
 
-  // LOAD FAVORITES FROM LOCALSTORAGE
+  // LOAD FAVORITES (SAFE + ONLY ONCE)
   useEffect(() => {
-    const fav = JSON.parse(localStorage.getItem("favorites")) || [];
-    setFavorites(fav);
+    if (typeof window !== "undefined") {
+      const fav = localStorage.getItem("favorites");
+
+      if (fav) {
+        try {
+          setFavorites(JSON.parse(fav));
+        } catch {
+          setFavorites([]);
+        }
+      }
+    }
   }, []);
 
+  // AUTO SYNC TO LOCALSTORAGE
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
+
   // SAFE FILTER
-  const filteredTiles = (Array.isArray(tiles) ? tiles : []).filter((tile) =>
-    (tile?.title || "").toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredTiles = Array.isArray(tiles)
+    ? tiles.filter((tile) =>
+        (tile?.title || "").toLowerCase().includes(search.toLowerCase())
+      )
+    : [];
 
-  // FAVORITE HANDLER
+  // FAVORITE HANDLER (SAFE UPDATE)
   const handleFavorite = (tile) => {
-    const exists = favorites.find((t) => t.id === tile.id);
+    setFavorites((prev) => {
+      const exists = prev.find((t) => t.id === tile.id);
 
-    let updated;
-
-    if (exists) {
-      updated = favorites.filter((t) => t.id !== tile.id);
-    } else {
-      updated = [...favorites, tile];
-    }
-
-    setFavorites(updated);
-    localStorage.setItem("favorites", JSON.stringify(updated));
+      if (exists) {
+        return prev.filter((t) => t.id !== tile.id);
+      } else {
+        return [...prev, tile];
+      }
+    });
   };
 
   return (
