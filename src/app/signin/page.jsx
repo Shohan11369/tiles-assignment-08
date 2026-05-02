@@ -23,44 +23,58 @@ export default function SignInPage() {
 
     const loading = toast.loading("Signing you in...");
 
-    const { data, error } = await authClient.signIn.email({
-      email,
-      password,
-      callbackURL: "/",
-    });
+    try {
+      const { data, error } = await authClient.signIn.email({
+        email,
+        password,
+        callbackURL: "/",
+      });
 
-    toast.dismiss(loading);
+      toast.dismiss(loading);
 
-    console.log({ data, error });
+      console.log({ data, error });
 
-    //  ERROR HANDLING
-    if (error) {
-      if (error.code === "INVALID_EMAIL_OR_PASSWORD") {
-        toast.error("Invalid email or password!");
-      } else {
-        toast.error(error.message || "Login failed!");
+      // ❌ ERROR HANDLING
+      if (error) {
+        if (error.code === "INVALID_EMAIL_OR_PASSWORD") {
+          toast.error("Invalid email or password!");
+        } else {
+          toast.error(error.message || "Login failed!");
+        }
+        return;
       }
-      return;
-    }
 
-    // SUCCESS
-    toast.success("Signed in successfully!");
+      // ✅ SUCCESS
+      toast.success("Signed in successfully!");
 
-    if (data) {
-      window.location.href = "/";
+      if (data) {
+        window.location.href = "/";
+      }
+    } catch (err) {
+      toast.dismiss(loading);
+      toast.error("Something went wrong!");
     }
   };
 
+  // 🔥 GOOGLE LOGIN (IMPROVED)
   const handlGoogleSignIn = async () => {
-    try {
-      const loading = toast.loading("Redirecting to Google...");
+    const loading = toast.loading("Redirecting to Google...");
 
-      await authClient.signIn.social({
+    try {
+      const { error } = await authClient.signIn.social({
         provider: "google",
       });
 
       toast.dismiss(loading);
+
+      if (error) {
+        toast.error(error.message || "Google sign-in failed!");
+        return;
+      }
+
+      toast.success("Google login successful!");
     } catch (err) {
+      toast.dismiss(loading);
       toast.error("Google sign-in failed!");
     }
   };
@@ -70,38 +84,46 @@ export default function SignInPage() {
       <Toaster position="top-center" />
 
       <Card className="border mx-auto w-[500px] py-10 mt-5">
-        <h1 className="text-center text-2xl font-bold">Sign In</h1>
+
+        <h1 className="text-center text-2xl font-bold">
+          Sign In
+        </h1>
 
         <Form className="flex w-96 mx-auto flex-col gap-4" onSubmit={onSubmit}>
-          {/* Email */}
+
+          {/* EMAIL */}
           <TextField isRequired name="email" type="email">
             <Label>Email</Label>
             <Input placeholder="john@example.com" />
             <FieldError />
           </TextField>
 
-          {/* Password */}
+          {/* PASSWORD */}
           <TextField isRequired name="password" type="password">
             <Label>Password</Label>
             <Input placeholder="Enter password" />
             <FieldError />
           </TextField>
 
+          {/* SUBMIT */}
           <Button type="submit">
             <Check />
             Sign in
           </Button>
+
         </Form>
 
-        {/* Google Login */}
+        {/* GOOGLE LOGIN */}
         <Button
           onClick={handlGoogleSignIn}
           type="button"
           variant="bordered"
-          className="w-full"
+          className="w-full mt-4"
         >
-          <GrGoogle /> Continue with Google
+          <GrGoogle />
+          Continue with Google
         </Button>
+
       </Card>
     </>
   );
