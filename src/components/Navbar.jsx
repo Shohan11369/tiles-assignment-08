@@ -10,11 +10,13 @@ const Navbar = () => {
 
   const handleSignOut = async () => {
     await authClient.signOut();
-  }
+  };
 
   return (
     <div className="border-b px-2">
-      <nav className=" flex justify-between items-center  py-3 max-w-7xl mx-auto w-full">
+      <nav className="flex flex-col md:flex-row justify-between items-center gap-3 md:gap-0 py-3 max-w-7xl mx-auto w-full">
+
+        {/* Logo */}
         <div className="flex gap-2 items-center">
           <Image
             src={"/logo.jpg"}
@@ -27,7 +29,8 @@ const Navbar = () => {
           <h3 className="font-black text-lg">Tiles</h3>
         </div>
 
-        <ul className="flex items-center gap-5 text-sm">
+        {/* Links */}
+        <ul className="flex flex-wrap justify-center items-center gap-3 md:gap-5 text-sm md:text-lg font-semibold">
           <li>
             <Link href={"/"}>Home</Link>
           </li>
@@ -37,12 +40,13 @@ const Navbar = () => {
           <li>
             <Link href={"/profile"}>My Profile</Link>
           </li>
-         
         </ul>
 
-        <div className="flex gap-4">
+        {/* Auth section */}
+        <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4 text-sm md:text-lg font-semibold">
+
           {!user && (
-            <ul className="flex items-center  text-sm gap-5">
+            <ul className="flex items-center gap-4 text-sm">
               <li>
                 <Link href={"/signup"}>SignUp</Link>
               </li>
@@ -53,19 +57,28 @@ const Navbar = () => {
           )}
 
           {user && (
-            <div className="flex gap-3">
+            <div className="flex items-center gap-3">
               <Avatar size="sm">
                 <Avatar.Image
-                  alt="John Doe"
+                  alt="user"
                   src={user?.image}
                   referrerPolicy="no-referrer"
                 />
-                <Avatar.Fallback>{user?.name.charAt(0)}</Avatar.Fallback>
+                <Avatar.Fallback>
+                  {user?.name?.charAt(0)}
+                </Avatar.Fallback>
               </Avatar>
 
-              <Button onClick={handleSignOut} size="sm" variant="danger">SignOut</Button>
+              <Button
+                onClick={handleSignOut}
+                size="sm"
+                variant="danger"
+              >
+                SignOut
+              </Button>
             </div>
           )}
+
         </div>
       </nav>
     </div>

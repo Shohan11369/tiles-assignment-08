@@ -12,8 +12,8 @@ const Footer = () => {
       {/* Subtle Gradient Glow */}
       <div
         className="absolute inset-0 -z-10 bg-linear-to-tr 
-        from-purple-500/5 via-transparent to-blue-500/5 
-        dark:from-purple-500/10 dark:to-blue-500/10 blur-3xl"
+        from-blue-500/5 via-transparent to-indigo-500/5 
+        dark:from-blue-500/10 dark:to-indigo-500/10 blur-3xl"
       />
 
       {/* Content */}
@@ -25,50 +25,50 @@ const Footer = () => {
             <div className="flex items-center gap-2">
               <Image
                 src="/logo.jpg"
-                alt="pixgen logo"
+                alt="tiles logo"
                 width={32}
                 height={32}
                 className="dark:brightness-200"
               />
               <h2 className="text-xl font-semibold tracking-tight text-black dark:text-white">
-                pixgen
+                Tiles
               </h2>
             </div>
 
             <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-400 max-w-xs">
-              Create production-ready AI visuals in seconds. Built for speed,
-              scale, and creativity.
+              Discover modern tile designs, explore collections, and find
+              inspiration for your next interior or architectural project.
             </p>
           </div>
 
           {/* Product */}
           <div>
             <h3 className="text-sm font-semibold text-black dark:text-white mb-4">
-              Product
+              Explore
             </h3>
             <ul className="space-y-3 text-sm text-gray-600 dark:text-gray-400">
+              <li>
+                <Link
+                  href="/all-tiles"
+                  className="hover:text-black dark:hover:text-white transition"
+                >
+                  All Tiles
+                </Link>
+              </li>
               <li>
                 <Link
                   href="/generate"
                   className="hover:text-black dark:hover:text-white transition"
                 >
-                  Generate
+                  Tile Generator
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/all-photos"
+                  href="/gallery"
                   className="hover:text-black dark:hover:text-white transition"
                 >
                   Gallery
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/pricing"
-                  className="hover:text-black dark:hover:text-white transition"
-                >
-                  Pricing
                 </Link>
               </li>
             </ul>
@@ -110,11 +110,11 @@ const Footer = () => {
           {/* CTA Block */}
           <div className="space-y-4">
             <h3 className="text-sm font-semibold text-black dark:text-white">
-              Start creating
+              Start exploring
             </h3>
 
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              Generate your first AI image today.
+              Browse thousands of modern tile designs and get inspired today.
             </p>
 
             <Link
@@ -134,7 +134,7 @@ const Footer = () => {
 
         {/* Bottom */}
         <div className="mt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
-          <p>© {new Date().getFullYear()} pixgen. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Tiles. All rights reserved.</p>
 
           <div className="flex items-center gap-6">
             <Link
