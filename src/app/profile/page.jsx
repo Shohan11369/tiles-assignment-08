@@ -13,7 +13,6 @@ export default function ProfilePage() {
 
   const [favorites, setFavorites] = useState([]);
 
-  // LocalStorage থেকে ফেভারিট ডাটা লোড করা
   useEffect(() => {
     const fav = JSON.parse(localStorage.getItem("favorites")) || [];
     setFavorites(fav);
@@ -44,15 +43,18 @@ export default function ProfilePage() {
     <div className="max-w-5xl mx-auto mt-10 px-4 pb-20">
       {/* PROFILE CARD */}
       <Card className="p-6 flex flex-col md:flex-row items-center gap-6 shadow-md border border-gray-100">
+        
         <div className="relative w-24 h-24 overflow-hidden rounded-full border-2 border-blue-100">
-          <img
+          <Image
+            key={user?.image}
             src={user?.image || "https://avatar.iran.liara.run/public"}
             alt="Profile"
-            className="w-full h-full object-cover"
+            fill 
+            className="object-cover"
+            unoptimized 
             referrerPolicy="no-referrer"
           />
         </div>
-
         <div className="flex-grow text-center md:text-left">
           <h2 className="text-2xl font-bold text-gray-800">{user?.name}</h2>
           <p className="text-gray-500">{user?.email}</p>
@@ -60,7 +62,6 @@ export default function ProfilePage() {
             Active User
           </span>
         </div>
-
         <div className="flex gap-3">
           <Button
             color="primary"

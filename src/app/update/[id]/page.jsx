@@ -16,7 +16,7 @@ export default function UpdatePage() {
 
   const [loading, setLoading] = useState(false);
 
-  // সেশন থেকে ইউজারের বর্তমান ডাটা ইনপুট ফিল্ডে বসানো
+
   useEffect(() => {
     if (session?.user) {
       setFormData({
@@ -30,12 +30,12 @@ export default function UpdatePage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      // Better Auth updateUser মেথড ব্যবহার করে ডাটাবেজ আপডেট
       const { data, error } = await authClient.updateUser({
         name: formData.name,
         image: formData.image,
@@ -46,14 +46,14 @@ export default function UpdatePage() {
         return;
       }
 
-      alert("Profile updated successfully!");
+      
+      await authClient.useSession.getState().revalidate();
 
-      // আপডেট হওয়ার পর সেশন রিফ্রেশ এবং প্রোফাইলে ফেরত পাঠানো
-      router.refresh();
+      alert("Profile updated successfully!");
       router.push("/profile");
+      router.refresh();
     } catch (error) {
       alert("Something went wrong!");
-      console.error(error);
     } finally {
       setLoading(false);
     }
