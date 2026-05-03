@@ -121,7 +121,7 @@ export default function UpdatePage() {
             />
             {imgError && formData.image && (
               <p className="text-red-500 text-xs mt-1">
-                ⚠️ এই URL থেকে image load হচ্ছে না
+                Url not fond
               </p>
             )}
           </div>

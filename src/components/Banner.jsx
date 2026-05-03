@@ -20,7 +20,7 @@ const Banner = () => {
             Explore Modern Tiles for Every Space
           </h1>
 
-          <p className="text-lg md:text-xl mb-6 max-w-xl text-[#f20a0ab4] font-medium leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)]">
+          <p className="text-lg md:text-xl mb-6 max-w-xl text-[#000000b4] font-medium leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)]">
             Find premium tile designs, view detailed previews, and discover
             styles that perfectly match your interior and architectural ideas.
           </p>
