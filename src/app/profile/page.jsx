@@ -26,8 +26,13 @@ export default function ProfilePage() {
     router.push("/signin");
   };
 
+  // সংশোধন: আপনার ফোল্ডার যেহেতু update/[id], তাই ডাইনামিক পাথ ব্যবহার করতে হবে
   const handleUpdate = () => {
-    router.push("/profile/update");
+    if (user?.id) {
+      router.push(`/update/${user.id}`);
+    } else {
+      console.error("User ID not found");
+    }
   };
 
   if (!user) {
@@ -78,6 +83,8 @@ export default function ProfilePage() {
                 <Image
                   src={tile.image}
                   alt={tile.title}
+                  width={64}
+                  height={64}
                   className="w-16 h-16 rounded object-cover"
                 />
 
@@ -94,24 +101,23 @@ export default function ProfilePage() {
       {/* RECENT ACTIVITY */}
       <div className="mt-10">
         <h3 className="text-xl font-semibold mb-4">Recent Activity</h3>
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="border p-4 rounded-lg">Ceramic Blue Tile</div>
-
           <div className="border p-4 rounded-lg">Modern Geometric Tile</div>
         </div>
       </div>
 
       {/* ACTION BUTTONS */}
       <div className="mt-10 flex flex-wrap gap-4">
-        <Button onClick={handleLogout} variant="danger">
+        {/* আপডেট বাটন: ফোল্ডার স্ট্রাকচার অনুযায়ী পাথ ঠিক করা হয়েছে */}
+        <Button color="primary" onClick={handleUpdate}>
+          Update Information
+        </Button>
+
+        <Button onClick={handleLogout} variant="bordered" color="danger">
           Logout
         </Button>
       </div>
-
-      <Button color="primary" onClick={() => router.push("/my-profile/update")}>
-        Update Information
-      </Button>
     </div>
   );
 }
