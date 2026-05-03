@@ -5,6 +5,7 @@ import { authClient } from "@/lib/auth-client";
 import { Avatar, Button, Card } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -59,8 +60,6 @@ export default function ProfilePage() {
           <h3 className="text-2xl font-bold">{favorites.length}</h3>
           <p className="text-gray-500">Favorites</p>
         </div>
-
-        
       </div>
 
       {/* FAVORITE TILES SECTION */}
@@ -105,12 +104,14 @@ export default function ProfilePage() {
 
       {/* ACTION BUTTONS */}
       <div className="mt-10 flex flex-wrap gap-4">
-
-
         <Button onClick={handleLogout} variant="danger">
           Logout
         </Button>
       </div>
+
+      <Link href="/my-profile/update">
+        <Button color="primary">Update Information</Button>
+      </Link>
     </div>
   );
 }

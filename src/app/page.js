@@ -20,7 +20,7 @@ export default async function Home() {
     <div>
       <MarqueeSection tiles={tiles} />
 
-      <Banner />
+      <Banner  />
 
       <FeaturedTiles tiles={tiles} />
     </div>
