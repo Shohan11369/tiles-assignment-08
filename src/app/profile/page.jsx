@@ -44,12 +44,7 @@ export default function ProfilePage() {
       {/* PROFILE CARD */}
       <Card className="p-6 flex flex-col md:flex-row items-center gap-6 shadow-md border border-gray-100">
         <div className="relative w-24 h-24 overflow-hidden rounded-full border-2 border-blue-100">
-          {/* <Image
-            src={user?.image || "https://avatar.iran.liara.run/public"}
-            alt="Profile"
-            className="w-full h-full object-cover"
-            referrerPolicy="no-referrer"
-          /> */}
+          
           <img
             src={user?.image || "https://avatar.iran.liara.run/public"}
             alt="Profile"

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
-import toast, { Toaster } from "react-hot-toast"; 
+import toast, { Toaster } from "react-hot-toast";
 
 export default function UpdatePage() {
   const { id } = useParams();
@@ -16,6 +16,7 @@ export default function UpdatePage() {
   });
 
   const [loading, setLoading] = useState(false);
+  const [imgError, setImgError] = useState(false);
 
   useEffect(() => {
     if (session?.user) {
@@ -27,6 +28,7 @@ export default function UpdatePage() {
   }, [session]);
 
   const handleChange = (e) => {
+    if (e.target.name === "image") setImgError(false);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -37,17 +39,18 @@ export default function UpdatePage() {
     try {
       const { data, error } = await authClient.updateUser({
         name: formData.name,
-        image: formData.image,
+        image: formData.image || null,
       });
+
+      console.log("updateUser response:", { data, error });
 
       if (error) {
         toast.error("Update failed: " + error.message);
         return;
       }
 
-      toast.success("Profile updated successfully!"); 
+      toast.success("Profile updated successfully!");
 
-      
       setTimeout(() => {
         router.refresh();
         router.push("/profile");
@@ -61,9 +64,10 @@ export default function UpdatePage() {
     }
   };
 
+  const previewSrc = formData.image || "https://avatar.iran.liara.run/public";
+
   return (
     <div className="flex justify-center items-center min-h-[80vh] px-4">
-   
       <Toaster position="top-center" reverseOrder={false} />
 
       <div className="max-w-xl w-full p-8 shadow-2xl rounded-2xl bg-white border border-gray-100">
@@ -71,6 +75,18 @@ export default function UpdatePage() {
           Update Information
         </h1>
         <p className="text-sm text-gray-500 mb-6 font-mono">(ID: {id})</p>
+
+        {/* IMAGE PREVIEW */}
+        <div className="flex justify-center mb-6">
+          <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-blue-100">
+            <img
+              src={imgError ? "https://avatar.iran.liara.run/public" : previewSrc}
+              alt="Preview"
+              className="w-full h-full object-cover"
+              onError={() => setImgError(true)}
+            />
+          </div>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Name Field */}
@@ -92,17 +108,22 @@ export default function UpdatePage() {
           {/* Image URL Field */}
           <div>
             <label className="block mb-2 text-sm font-semibold text-gray-700">
-              Image URL
+              Image URL{" "}
+              <span className="text-gray-400 font-normal">(optional)</span>
             </label>
             <input
               type="url"
               name="image"
-              required
               value={formData.image}
               onChange={handleChange}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all"
-              placeholder="Enter image URL"
+              placeholder="https://example.com/photo.jpg"
             />
+            {imgError && formData.image && (
+              <p className="text-red-500 text-xs mt-1">
+                ⚠️ এই URL থেকে image load হচ্ছে না
+              </p>
+            )}
           </div>
 
           <button
@@ -112,8 +133,10 @@ export default function UpdatePage() {
           >
             {loading ? (
               <span className="flex items-center justify-center">
-               
-                <svg className="animate-spin h-5 w-5 mr-3 border-t-2 border-white rounded-full" viewBox="0 0 24 24"></svg>
+                <svg
+                  className="animate-spin h-5 w-5 mr-3 border-t-2 border-white rounded-full"
+                  viewBox="0 0 24 24"
+                ></svg>
                 Updating...
               </span>
             ) : (
