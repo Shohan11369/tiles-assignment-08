@@ -16,7 +16,7 @@ export default function UpdatePage() {
 
   const [loading, setLoading] = useState(false);
 
-
+ 
   useEffect(() => {
     if (session?.user) {
       setFormData({
@@ -30,12 +30,12 @@ export default function UpdatePage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
+     
       const { data, error } = await authClient.updateUser({
         name: formData.name,
         image: formData.image,
@@ -46,14 +46,14 @@ export default function UpdatePage() {
         return;
       }
 
-      
-      await authClient.useSession.getState().revalidate();
-
       alert("Profile updated successfully!");
-      router.push("/profile");
+
+     
       router.refresh();
+      router.push("/profile");
     } catch (error) {
       alert("Something went wrong!");
+      console.error(error);
     } finally {
       setLoading(false);
     }
