@@ -2,14 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { authClient } from "@/lib/auth-client"; // সেশন ডাটা পাওয়ার জন্য
+import { authClient } from "@/lib/auth-client";
 
 export default function UpdatePage() {
-  const { id } = useParams(); // URL থেকে ID নিচ্ছে
+  const { id } = useParams();
   const router = useRouter();
   const { data: session } = authClient.useSession();
 
-  // চ্যালেঞ্জ রিকোয়ারমেন্ট অনুযায়ী Name এবং Image এর জন্য স্টেট
   const [formData, setFormData] = useState({
     name: "",
     image: "",
@@ -17,7 +16,6 @@ export default function UpdatePage() {
 
   const [loading, setLoading] = useState(false);
 
-  // সেশন থেকে ইউজারের বর্তমান তথ্য ইনপুট ফিল্ডে প্রি-ফিলাপ করা
   useEffect(() => {
     if (session?.user) {
       setFormData({
@@ -36,12 +34,25 @@ export default function UpdatePage() {
     setLoading(true);
 
     try {
-      console.log("Updating data for ID:", id, formData);
+      
+      const { data, error } = await authClient.updateUser({
+        name: formData.name,
+        image: formData.image,
+      });
 
+      if (error) {
+        alert("Update failed: " + error.message);
+        return;
+      }
+
+      console.log("Updated successfully:", data);
       alert("Profile updated successfully!");
-      router.push("/profile"); //
+
+      
+      router.push("/profile");
+      router.refresh();
     } catch (error) {
-      alert("Update failed!");
+      alert("Something went wrong!");
       console.error(error);
     } finally {
       setLoading(false);
