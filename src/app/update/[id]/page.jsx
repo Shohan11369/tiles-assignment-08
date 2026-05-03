@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+import toast, { Toaster } from "react-hot-toast"; // Toast ইমপোর্ট করা হয়েছে
 
 export default function UpdatePage() {
   const { id } = useParams();
@@ -16,7 +17,6 @@ export default function UpdatePage() {
 
   const [loading, setLoading] = useState(false);
 
- 
   useEffect(() => {
     if (session?.user) {
       setFormData({
@@ -35,24 +35,26 @@ export default function UpdatePage() {
     setLoading(true);
 
     try {
-     
       const { data, error } = await authClient.updateUser({
         name: formData.name,
         image: formData.image,
       });
 
       if (error) {
-        alert("Update failed: " + error.message);
+        toast.error("Update failed: " + error.message); // Error Toast
         return;
       }
 
-      alert("Profile updated successfully!");
+      toast.success("Profile updated successfully!"); // Success Toast
 
-     
-      router.refresh();
-      router.push("/profile");
+      // রিফ্রেশ এবং রিডাইরেক্ট করার আগে সামান্য সময় দেওয়া যাতে ইউজার টোস্টটি দেখতে পায়
+      setTimeout(() => {
+        router.refresh();
+        router.push("/profile");
+      }, 1500);
+
     } catch (error) {
-      alert("Something went wrong!");
+      toast.error("Something went wrong!");
       console.error(error);
     } finally {
       setLoading(false);
@@ -61,6 +63,9 @@ export default function UpdatePage() {
 
   return (
     <div className="flex justify-center items-center min-h-[80vh] px-4">
+      {/* Toaster component টি এখানে রাখা হয়েছে */}
+      <Toaster position="top-center" reverseOrder={false} />
+
       <div className="max-w-xl w-full p-8 shadow-2xl rounded-2xl bg-white border border-gray-100">
         <h1 className="text-2xl font-bold mb-2 text-gray-800">
           Update Information
@@ -103,9 +108,17 @@ export default function UpdatePage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 active:scale-[0.98] transition-all shadow-lg shadow-blue-200"
+            className="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 active:scale-[0.98] transition-all shadow-lg shadow-blue-200 disabled:bg-blue-400 disabled:cursor-not-allowed"
           >
-            {loading ? "Updating..." : "Update Information"}
+            {loading ? (
+              <span className="flex items-center justify-center">
+               
+                <svg className="animate-spin h-5 w-5 mr-3 border-t-2 border-white rounded-full" viewBox="0 0 24 24"></svg>
+                Updating...
+              </span>
+            ) : (
+              "Update Information"
+            )}
           </button>
         </form>
       </div>
