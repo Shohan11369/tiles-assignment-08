@@ -34,25 +34,25 @@ export default function UpdatePage() {
     setLoading(true);
 
     try {
-      
       const { data, error } = await authClient.updateUser({
         name: formData.name,
         image: formData.image,
       });
 
       if (error) {
-        alert("Update failed: " + error.message);
+        // এখানে এরর মেসেজটি ভালো করে লক্ষ্য করুন
+        console.error("Auth Error Details:", error);
+        alert("Update failed: " + (error.message || "Unknown error"));
         return;
       }
 
-      console.log("Updated successfully:", data);
+      console.log("Response Data:", data); // চেক করুন ইমেজের ভ্যালু কি আসছে
       alert("Profile updated successfully!");
 
-      
-      router.push("/profile");
       router.refresh();
+      router.push("/profile");
     } catch (error) {
-      alert("Something went wrong!");
+      alert("Network or Server error!");
       console.error(error);
     } finally {
       setLoading(false);
