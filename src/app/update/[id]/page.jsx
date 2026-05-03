@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
-import toast, { Toaster } from "react-hot-toast"; // Toast ইমপোর্ট করা হয়েছে
+import toast, { Toaster } from "react-hot-toast"; 
 
 export default function UpdatePage() {
   const { id } = useParams();
@@ -41,13 +41,13 @@ export default function UpdatePage() {
       });
 
       if (error) {
-        toast.error("Update failed: " + error.message); // Error Toast
+        toast.error("Update failed: " + error.message);
         return;
       }
 
-      toast.success("Profile updated successfully!"); // Success Toast
+      toast.success("Profile updated successfully!"); 
 
-      // রিফ্রেশ এবং রিডাইরেক্ট করার আগে সামান্য সময় দেওয়া যাতে ইউজার টোস্টটি দেখতে পায়
+      
       setTimeout(() => {
         router.refresh();
         router.push("/profile");
@@ -63,7 +63,7 @@ export default function UpdatePage() {
 
   return (
     <div className="flex justify-center items-center min-h-[80vh] px-4">
-      {/* Toaster component টি এখানে রাখা হয়েছে */}
+   
       <Toaster position="top-center" reverseOrder={false} />
 
       <div className="max-w-xl w-full p-8 shadow-2xl rounded-2xl bg-white border border-gray-100">

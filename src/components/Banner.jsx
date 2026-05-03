@@ -7,10 +7,10 @@ const Banner = () => {
       {/* Background Image */}
       <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6')] bg-cover bg-center scale-100"></div>
 
-      {/* White Overlay (soft clean look) */}
+   
       <div className="absolute inset-0 bg-white/10"></div>
 
-      {/* Extra subtle gradient for depth */}
+    
       <div className="absolute inset-0 bg-linear-to-r from-white/20 via-white/10 to-transparent"></div>
 
       {/* Content */}

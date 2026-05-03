@@ -9,7 +9,7 @@ const Footer = () => {
       {/* Background Layer */}
       <div className="absolute inset-0 -z-10 bg-white dark:bg-[#0a0a0b]" />
 
-      {/* Subtle Gradient Glow */}
+    
       <div
         className="absolute inset-0 -z-10 bg-linear-to-tr 
         from-blue-500/5 via-transparent to-indigo-500/5 

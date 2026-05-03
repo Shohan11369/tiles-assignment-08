@@ -60,7 +60,7 @@ export default function SignInPage() {
     }
   };
 
-  //  GOOGLE LOGIN (IMPROVED)
+  //  GOOGLE LOGIN 
   const handlGoogleSignIn = async () => {
     const loading = toast.loading("Redirecting to Google...");
 
