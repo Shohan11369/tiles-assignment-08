@@ -16,6 +16,7 @@ export default function UpdatePage() {
 
   const [loading, setLoading] = useState(false);
 
+  // সেশন থেকে ইউজারের বর্তমান ডাটা ইনপুট ফিল্ডে বসানো
   useEffect(() => {
     if (session?.user) {
       setFormData({
@@ -34,25 +35,24 @@ export default function UpdatePage() {
     setLoading(true);
 
     try {
+      // Better Auth updateUser মেথড ব্যবহার করে ডাটাবেজ আপডেট
       const { data, error } = await authClient.updateUser({
         name: formData.name,
         image: formData.image,
       });
 
       if (error) {
-        // এখানে এরর মেসেজটি ভালো করে লক্ষ্য করুন
-        console.error("Auth Error Details:", error);
-        alert("Update failed: " + (error.message || "Unknown error"));
+        alert("Update failed: " + error.message);
         return;
       }
 
-      console.log("Response Data:", data); // চেক করুন ইমেজের ভ্যালু কি আসছে
       alert("Profile updated successfully!");
 
+      // আপডেট হওয়ার পর সেশন রিফ্রেশ এবং প্রোফাইলে ফেরত পাঠানো
       router.refresh();
       router.push("/profile");
     } catch (error) {
-      alert("Network or Server error!");
+      alert("Something went wrong!");
       console.error(error);
     } finally {
       setLoading(false);
@@ -68,7 +68,7 @@ export default function UpdatePage() {
         <p className="text-sm text-gray-500 mb-6 font-mono">(ID: {id})</p>
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Name Input Field */}
+          {/* Name Field */}
           <div>
             <label className="block mb-2 text-sm font-semibold text-gray-700">
               Name
@@ -84,7 +84,7 @@ export default function UpdatePage() {
             />
           </div>
 
-          {/* Image URL Input Field */}
+          {/* Image URL Field */}
           <div>
             <label className="block mb-2 text-sm font-semibold text-gray-700">
               Image URL
@@ -100,7 +100,6 @@ export default function UpdatePage() {
             />
           </div>
 
-          {/* Update Information Button */}
           <button
             type="submit"
             disabled={loading}

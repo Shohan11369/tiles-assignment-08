@@ -5,17 +5,15 @@ import { authClient } from "@/lib/auth-client";
 import { Avatar, Button, Card } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link";
 
 export default function ProfilePage() {
   const router = useRouter();
-
-  const userData = authClient.useSession();
-  const user = userData.data?.user;
+  const { data: session, isPending } = authClient.useSession();
+  const user = session?.user;
 
   const [favorites, setFavorites] = useState([]);
 
-  // LOAD FAVORITES FROM LOCALSTORAGE
+  // LocalStorage থেকে ফেভারিট ডাটা লোড করা
   useEffect(() => {
     const fav = JSON.parse(localStorage.getItem("favorites")) || [];
     setFavorites(fav);
@@ -26,14 +24,13 @@ export default function ProfilePage() {
     router.push("/signin");
   };
 
-  // সংশোধন: আপনার ফোল্ডার যেহেতু update/[id], তাই ডাইনামিক পাথ ব্যবহার করতে হবে
   const handleUpdate = () => {
     if (user?.id) {
       router.push(`/update/${user.id}`);
-    } else {
-      console.error("User ID not found");
     }
   };
+
+  if (isPending) return <div className="text-center mt-20">Loading...</div>;
 
   if (!user) {
     return (
@@ -44,79 +41,77 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto mt-10 px-4">
+    <div className="max-w-5xl mx-auto mt-10 px-4 pb-20">
       {/* PROFILE CARD */}
-      <Card className="p-6 flex flex-col md:flex-row items-center gap-6">
-        <Avatar size="lg">
-          <Avatar.Image src={user?.image} referrerPolicy="no-referrer" />
-          <Avatar.Fallback>{user?.name?.charAt(0)}</Avatar.Fallback>
-        </Avatar>
+      <Card className="p-6 flex flex-col md:flex-row items-center gap-6 shadow-md border border-gray-100">
+        <div className="relative w-24 h-24 overflow-hidden rounded-full border-2 border-blue-100">
+          <img
+            src={user?.image || "https://avatar.iran.liara.run/public"}
+            alt="Profile"
+            className="w-full h-full object-cover"
+            referrerPolicy="no-referrer"
+          />
+        </div>
 
-        <div>
-          <h2 className="text-2xl font-bold">{user?.name}</h2>
+        <div className="flex-grow text-center md:text-left">
+          <h2 className="text-2xl font-bold text-gray-800">{user?.name}</h2>
           <p className="text-gray-500">{user?.email}</p>
-          <p className="text-sm text-green-600 mt-1">Active User</p>
+          <span className="inline-block px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full mt-2">
+            Active User
+          </span>
+        </div>
+
+        <div className="flex gap-3">
+          <Button
+            color="primary"
+            onClick={handleUpdate}
+            className="font-semibold"
+          >
+            Update Profile
+          </Button>
+          <Button onClick={handleLogout} variant="flat" color="danger">
+            Logout
+          </Button>
         </div>
       </Card>
 
       {/* STATS */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-        <div className="border p-6 rounded-lg text-center">
-          <h3 className="text-2xl font-bold">{favorites.length}</h3>
-          <p className="text-gray-500">Favorites</p>
+        <div className="bg-white border border-gray-100 p-6 rounded-xl shadow-sm text-center">
+          <h3 className="text-2xl font-bold text-blue-600">
+            {favorites.length}
+          </h3>
+          <p className="text-gray-500 font-medium">Favorites</p>
         </div>
       </div>
 
       {/* FAVORITE TILES SECTION */}
       <div className="mt-10">
-        <h3 className="text-xl font-semibold mb-4">Favorite Tiles</h3>
-
+        <h3 className="text-xl font-bold mb-6 text-gray-800">Favorite Tiles</h3>
         {favorites.length === 0 ? (
-          <p className="text-gray-500">No favorite tiles yet.</p>
+          <p className="text-gray-500 italic">No favorite tiles yet.</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {favorites.map((tile) => (
-              <div
+              <Card
                 key={tile.id}
-                className="border p-4 rounded-lg flex items-center gap-4"
+                className="p-4 flex flex-row items-center gap-4 border border-gray-50 shadow-sm"
               >
                 <Image
                   src={tile.image}
                   alt={tile.title}
-                  width={64}
-                  height={64}
-                  className="w-16 h-16 rounded object-cover"
+                  width={60}
+                  height={60}
+                  className="rounded-lg object-cover w-14 h-14"
                 />
-
                 <div>
-                  <h4 className="font-semibold">{tile.title}</h4>
-                  <p className="text-sm text-gray-500">{tile.category}</p>
+                  <h4 className="font-bold text-gray-800">{tile.title}</h4>
+                  <p className="text-xs text-gray-400">{tile.category}</p>
                 </div>
-              </div>
+              </Card>
             ))}
           </div>
         )}
-      </div>
-
-      {/* RECENT ACTIVITY */}
-      <div className="mt-10">
-        <h3 className="text-xl font-semibold mb-4">Recent Activity</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="border p-4 rounded-lg">Ceramic Blue Tile</div>
-          <div className="border p-4 rounded-lg">Modern Geometric Tile</div>
-        </div>
-      </div>
-
-      {/* ACTION BUTTONS */}
-      <div className="mt-10 flex flex-wrap gap-4">
-        {/* আপডেট বাটন: ফোল্ডার স্ট্রাকচার অনুযায়ী পাথ ঠিক করা হয়েছে */}
-        <Button color="primary" onClick={handleUpdate}>
-          Update Information
-        </Button>
-
-        <Button onClick={handleLogout} variant="bordered" color="danger">
-          Logout
-        </Button>
       </div>
     </div>
   );
