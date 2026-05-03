@@ -14,15 +14,14 @@ export default function UpdatePage() {
 
   const [loading, setLoading] = useState(false);
 
-  // 🔹 Load data from public/data.json
+  // 🔹 Load data
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await fetch("/data.json");
         const data = await res.json();
 
-        // ধরলাম data array আকারে আছে
-        const item = data.find((item) => item.id === id);
+        const item = data.find((item) => item.id === Number(id));
 
         if (item) {
           setFormData({
@@ -43,22 +42,24 @@ export default function UpdatePage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // 🔹 update (frontend-only simulation)
+  // 🔹 update (frontend only demo)
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const res = await fetch("/data.json");
+      const res = await fetch("/data.json"); // same origin safe (Vercel + localhost)
       const data = await res.json();
 
       const updatedData = data.map((item) =>
-        item.id === id ? { ...item, ...formData } : item,
+        item.id === Number(id)
+          ? { ...item, ...formData }
+          : item
       );
 
-      console.log("Updated Data (frontend only):", updatedData);
+      console.log("Updated Data:", updatedData);
 
-      alert("Updated successfully (only frontend demo)!");
+      alert("Updated successfully (frontend demo only)");
 
       router.push("/");
     } catch (error) {

@@ -109,9 +109,9 @@ export default function ProfilePage() {
         </Button>
       </div>
 
-      <Link href="/my-profile/update">
-        <Button color="primary">Update Information</Button>
-      </Link>
+      <Button color="primary" onClick={() => router.push("/my-profile/update")}>
+        Update Information
+      </Button>
     </div>
   );
 }
